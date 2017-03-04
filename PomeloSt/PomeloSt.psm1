@@ -1,1 +1,1 @@
-Export-ModuleMember -Cmdlet "Convert-StTemplate"
+Export-ModuleMember -Cmdlet "Convert-PoTemplate"

@@ -11,9 +11,8 @@ using Antlr4.StringTemplate;
 // PSObject をstringtemplateから触れるようにするために。ObjectModelAdaptor が
 // https://github.com/antlr/antlrcs/blob/master/Antlr4.StringTemplate/Misc/ObjectModelAdaptor.cs
 
-namespace StringTemplateCmdlet
+namespace PomeloSt
 {
-    [Cmdlet(VerbsData.Convert, "StTemplate")]
     public abstract  class BaseStTemplate : PSCmdlet, IDynamicParameters
     {
         [Parameter(ParameterSetName = "anonymous", HelpMessage = "template string", Mandatory = true, Position = 0)]

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Management.Automation;
 using Antlr4.StringTemplate;
 using Antlr4.StringTemplate.Misc;
 
-namespace StringTemplateModule
+namespace PomeloSt
 {
     // http://stackoverflow.com/questions/23076965/antlr4-stringtemplate-not-compatible-with-json-net-dynamic-items
     // http://www.programcreek.com/java-api-examples/index.php?api=org.stringtemplate.v4.misc.ObjectModelAdaptor

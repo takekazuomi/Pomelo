@@ -30,14 +30,13 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-using System.Runtime.Serialization;
 using System.Security;
 using System.Text;
 using System.Web;
 using Antlr4.StringTemplate;
 using CultureInfo = System.Globalization.CultureInfo;
 
-namespace StringTemplateCmdlet
+namespace PomeloSt
 {
     public class JsonRenderer : IAttributeRenderer
     {

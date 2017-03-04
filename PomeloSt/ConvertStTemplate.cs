@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
 using Antlr4.StringTemplate;
 using Antlr4.StringTemplate.Visualizer.Extensions;
-using StringTemplateModule;
 
 // http://www.powershellmagazine.com/2014/03/18/writing-a-powershell-module-in-c-part-1-the-basics/
 
 // PSObject をstringtemplateから触れるようにするために。ObjectModelAdaptor が
 // https://github.com/antlr/antlrcs/blob/master/Antlr4.StringTemplate/Misc/ObjectModelAdaptor.cs
 
-namespace StringTemplateCmdlet
+namespace PomeloSt
 {
-    [Cmdlet(VerbsData.Convert, "StTemplate")]
+    [Cmdlet(VerbsData.Convert, "PoTemplate")]
     public class ConvertStTemplate : BaseStTemplate
     {
         [Parameter(HelpMessage = "show visualizer.")]

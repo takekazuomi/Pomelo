@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Antlr4.StringTemplate;
 using Antlr4.StringTemplate.Misc;
 
-namespace StringTemplateModule
+namespace PomeloSt
 {
     public class MapModelAdaptorWrapper:MapModelAdaptor
     {
