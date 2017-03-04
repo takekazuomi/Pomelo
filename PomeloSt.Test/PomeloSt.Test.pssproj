@@ -31,7 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SshConfig.Tests.ps1" />
-    <Compile Include="Convert-StTemplate.Tests.ps1" />
+    <Compile Include="Convert-PoTemplate.Tests.ps1" />
     <Compile Include="st\message.st" />
   </ItemGroup>
   <ItemGroup>
