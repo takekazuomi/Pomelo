@@ -1,5 +1,5 @@
 ﻿Write-Host (Get-Location)
-Import-Module $PSScriptRoot/../StringTemplateCmdlet/bin/Debug/StringTemplateCmdlet.dll -Force -Verbose
+Import-Module $PSScriptRoot/../PomeloSt/bin/Debug/PomeloSt -Force -Verbose
 Set-StrictMode -Version Latest
 
 Describe -Tag "sshconfig" "ssh config generator" {

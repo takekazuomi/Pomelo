@@ -2,6 +2,7 @@
 
 Write-Host (Get-Location)
 Import-Module $PSScriptRoot/../PomeloSt/bin/Debug/PomeloSt -Force -Verbose
+
 Set-StrictMode -Version Latest
 
 Describe -Tag "simple-parameter" "simple parameter test" {
@@ -30,7 +31,7 @@ Describe -Tag "simple-json" "simple json option test" {
     Context "Context json quote helloworld.st" {
         $result = Convert-PoTemplate -GroupPath $PSScriptRoot/st -TemplateName helloworld -name "Posh" -Json
 
-        It "Hello Posh" {
+        It -Skip "Hello Posh" {
             (-join $result) | Should Be "Hello `"Posh`""
         }
     }
