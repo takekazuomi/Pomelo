@@ -30,7 +30,7 @@ function deployResourceGroupDeployment {
     }
 }
 
-function Set-FileToBlob
+function Set-PoAzFileToBlob
 {
     [CmdletBinding()]
     Param(
@@ -38,7 +38,7 @@ function Set-FileToBlob
         [string]$ContainerName,
         [string]$SourceFile
     )
-#    Write-Host "Set-FileToBlob"
+#    Write-Host "Set-PoAzFileToBlob"
 
     $startTime=(Get-Date).AddMinutes(-15)
     $expiryTime=(Get-Date).AddDays(10)
@@ -60,7 +60,7 @@ function Set-FileToBlob
     $result.ICloudBlob.StorageUri.PrimaryUri.AbsoluteUri
 }
 
-function Set-AzVMCustomScript {
+function Set-PoAzVMCustomScript {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]
@@ -85,7 +85,7 @@ function Set-AzVMCustomScript {
     { 
         "File" {
             $FileUris = $Files | %{
-                Set-FileToBlob $StorageAccountName $ContainerName $_
+                Set-PoAzFileToBlob $StorageAccountName $ContainerName $_
             }
             break
         } 
@@ -103,7 +103,7 @@ function Set-AzVMCustomScript {
     deployResourceGroupDeployment $ResourceGroupName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose
 }
 
-function Get-AzKeylist {
+function Get-PoAzKeylist {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]

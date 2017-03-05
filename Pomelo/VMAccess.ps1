@@ -49,7 +49,7 @@ function buildConfig {
     }
 }
 
-function Set-AzVMUserCredentials {
+function Set-PoAzVMUserCredentials {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]
@@ -83,7 +83,7 @@ function Set-AzVMUserCredentials {
     deployResourceGroupDeployment $ResourceGroupName $VMName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose
 }
 
-function Remove-AzVMUser {
+function Remove-PoAzVMUser {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]

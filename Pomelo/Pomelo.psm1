@@ -1,22 +1,20 @@
-Push-Location $PSScriptRoot
-. .\Utils.ps1
-. .\SshConfig.ps1
-. .\VMAccess.ps1
-. .\CustomScript.ps1
-Pop-Location
+Get-ChildItem "$PSScriptRoot/*.ps1" |
+    ? { $_.Name -notlike "*.Tests.*" } |
+    % { . $_.PSPath }
+
 
 Export-ModuleMember `
     -Function @(
-        'Get-AzSshConfig'
-        'Get-AzSshJumpboxConfig'
-        'Get-AzSshRemoteDesktopFile'
-        'Copy-SshId'
-        'Set-AzVMUserCredentials'
-        'Remove-AzVMUser'
-        'Set-AzVMCustomScript'
-        'Set-FileToBlob'
-        'Get-AzKeylist',
-        'Encrypt-CmsContent',
-        'Decrypt-CmsContent'
+        'Copy-PoSshId'
+        'Decrypt-PoCmsContent'
+        'Encrypt-PoCmsContent',
+        'Get-PoAzKeylist',
+        'Get-PoAzSshConfig'
+        'Get-PoAzSshJumpboxConfig'
+        'Get-PoAzSshRemoteDesktopFile'
+        'Remove-PoAzVMUser'
+        'Set-PoAzFileToBlob'
+        'Set-PoAzVMCustomScript'
+        'Set-PoAzVMUserCredentials'
     )
 

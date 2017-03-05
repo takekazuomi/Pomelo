@@ -43,7 +43,7 @@ function getSshConfig {
     $config
 }
 
-function Get-AzSshConfig {
+function Get-PoAzSshConfig {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]
@@ -60,7 +60,7 @@ function Get-AzSshConfig {
     $result
 }
 
-function Get-AzSshJumpboxConfig {
+function Get-PoAzSshJumpboxConfig {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]
@@ -97,7 +97,7 @@ function Get-AzSshJumpboxConfig {
             $vmName = $VM.Name
             $remotePort = ?: {$VM.StorageProfile.OsDisk.OsType -eq "Windows"} {
                 Write-Host $vmName
-                Get-AzSshRemoteDesktopFile -Name $vmName -HostName "localhost" -Port $localPort -Path $Path | Out-Null
+                Get-PoAzSshRemoteDesktopFile -Name $vmName -HostName "localhost" -Port $localPort -Path $Path | Out-Null
                 3389
             } {
                 # add ssh setting
@@ -128,7 +128,7 @@ function Get-AzSshJumpboxConfig {
     }
 }
 
-function Get-AzSshRemoteDesktopFile{
+function Get-PoAzSshRemoteDesktopFile{
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]
@@ -147,7 +147,7 @@ function Get-AzSshRemoteDesktopFile{
 }
 
 # install your public key in a remote machine's authorized_keys
-function Copy-SshId {
+function Copy-PoSshId {
     [CmdletBinding()]
     Param(
         [Parameter(Position=0,Mandatory=$true)]

@@ -1,4 +1,4 @@
-function Decrypt-CmsContent {
+function Decrypt-PoCmsContent {
     param(
         [string]$CertThumbprint,
         [Parameter(ParameterSetName="base64")]
@@ -24,7 +24,7 @@ function Decrypt-CmsContent {
     [Text.Encoding]::UTF8.GetString($cms.ContentInfo.Content)
 }
 
-function Encrypt-CmsContent {
+function Encrypt-PoCmsContent {
     param(
         [string]$CertThumbprint,
         [Parameter(ParameterSetName="string")]
