@@ -34,20 +34,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cms.ps1" />
-    <Compile Include="CustomScript.ps1" />
     <Compile Include="Pomelo.psd1" />
     <Compile Include="Pomelo.psm1" />
-    <Compile Include="Pomelo.Tests.ps1" />
+    <Compile Include="Scripts\Cms.ps1" />
+    <Compile Include="Scripts\CustomScript.ps1" />
+    <Compile Include="Scripts\Nsg.ps1" />
+    <Compile Include="Scripts\NsgUtils.ps1" />
+    <Compile Include="Scripts\SshConfig.ps1" />
+    <Compile Include="Scripts\Utils.ps1" />
+    <Compile Include="Scripts\VMAccess.ps1" />
     <Compile Include="st\keylist.stg" />
-    <Compile Include="VMAccess.ps1" />
+    <Compile Include="Tests\Nsg.Tests.ps1" />
+    <Compile Include="Tests\Pomelo.Tests.ps1" />
     <Compile Include="st\rdpfile.stg" />
     <Compile Include="st\sshconfig.stg" />
-    <Compile Include="SshConfig.ps1" />
-    <Compile Include="Utils.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Scripts\" />
+    <Folder Include="Scripts\st\" />
     <Folder Include="st\" />
+    <Folder Include="Tests\" />
     <Folder Include="tmp\" />
   </ItemGroup>
   <ItemGroup>
