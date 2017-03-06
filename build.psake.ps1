@@ -8,7 +8,7 @@ properties {
     $targetBase = "tools"
 }
 
-Task default -depends Build-Pomelo, Build-PomeloSt
+Task default -depends Clean, Build-Pomelo, Build-PomeloSt
 
 Task Build-Pomelo {
     Set-Location "$baseDir"
@@ -23,5 +23,12 @@ Task SetEnvironment {
 Task Build-PomeloSt -depends SetEnvironment {
     Set-Location "$baseDir/PomeloSt"
     Exec { & "msbuild.exe" /nologo /t:Rebuild /p:Configuration=Release /ToolsVersion:14.0 }
+    Set-Location $currentDir
+}
+
+Task Clean {
+    Set-Location "$baseDir"
+    rm -Force -Recurse .\build\Pomelo\* -Exclude ".gitignore" -Verbose
+    rm -Force -Recurse .\build\PomeloSt\* -Exclude ".gitignore"  -Verbose
     Set-Location $currentDir
 }

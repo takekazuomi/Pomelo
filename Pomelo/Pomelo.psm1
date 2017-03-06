@@ -2,6 +2,7 @@ Get-ChildItem "$PSScriptRoot/Scripts/*.ps1" |
     ? { $_.Name -notlike "*.Tests.*" } |
     % { . $_.PSPath }
 
+Import-Module PomeloSt -Force
 
 Export-ModuleMember `
     -Function @(
