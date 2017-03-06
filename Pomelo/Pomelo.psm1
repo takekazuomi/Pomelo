@@ -16,5 +16,6 @@ Export-ModuleMember `
         'Set-PoAzFileToBlob'
         'Set-PoAzVMCustomScript'
         'Set-PoAzVMUserCredentials'
+        'Import-NsgRuleCsv'
     )
 

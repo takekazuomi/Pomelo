@@ -1,1 +1,1 @@
-Export-ModuleMember -Cmdlet "Convert-PoTemplate"
+Export-ModuleMember -Cmdlet "Invoke-PoTemplate"

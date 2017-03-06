@@ -77,7 +77,7 @@ function Set-PoAzVMUserCredentials {
     if ($Sshkey) {$config.protectedSettings.Add("ssh_key", $Sshkey)}
     if ($Expiration) {$config.protectedSettings.Add("expiration", $Expiration)}
 
-    $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
+    $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
     Write-Verbose $result -Verbose:$verbose
 
     deployResourceGroupDeployment $ResourceGroupName $VMName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose
@@ -103,7 +103,7 @@ function Remove-PoAzVMUser {
         $config = buildConfig $VMName
         $config.protectedSettings.Add("remove_user", $UserName)
 
-        $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
+        $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
         Write-Verbose $result -Verbose:$verbose
 
         deployResourceGroupDeployment $ResourceGroupName $VMName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose
@@ -131,7 +131,7 @@ function Reset-AzVMSshConfig {
         $config = buildConfig $VMName
         $config.protectedSettings.Add("reset_ssh", $true)
 
-        $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
+        $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
         Write-Verbose $result -Verbose:$verbose
 
         deployResourceGroupDeployment $ResourceGroupName $VMName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose
@@ -160,7 +160,7 @@ function Reset-AzVMSshConfig {
         $config = buildConfig $VMName
         $config.protectedSettings.Add("reset_ssh", $true)
 
-        $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
+        $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
         Write-Verbose $result -Verbose:$verbose
 
         deployResourceGroupDeployment $ResourceGroupName $VMName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose
@@ -193,7 +193,7 @@ function Check-AzVMDisk {
         $config = buildConfig $VMName
         $config.protectedSettings.Add("check_disk", $true)
 
-        $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
+        $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
         Write-Verbose $result -Verbose:$verbose
 
         deployResourceGroupDeployment $ResourceGroupName $VMName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose
@@ -225,7 +225,7 @@ function Repair-AzVMDisk {
         $config.protectedSettings.Add("repair_disk", $true)
         $config.protectedSettings.Add("disk_name", $DiskName)
 
-        $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
+        $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/vmaccess.stg -TemplateName vmaccess -config $config -Verbose:$verbose 
         Write-Verbose $result -Verbose:$verbose
 
         deployResourceGroupDeployment $ResourceGroupName $VMName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose

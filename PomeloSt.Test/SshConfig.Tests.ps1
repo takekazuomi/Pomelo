@@ -18,11 +18,11 @@ Describe -Tag "sshconfig" "ssh config generator" {
         }
     }
 
-    $result = $config | Convert-StTemplate -GroupPath $PSScriptRoot/st/sshconfig.stg -TemplateName host -Verbose
+    $result = $config | Invoke-PoTemplate -GroupPath $PSScriptRoot/st/sshconfig.stg -TemplateName host -Verbose
     Write-Host "result:" $result
 }
 
 Describe -Tag "mygroup" "mygroup" {
-    $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/mygroup.stg -TemplateName sometmp -arg1 "Value1" -Verbose
+    $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/mygroup.stg -TemplateName sometmp -arg1 "Value1" -Verbose
     Write-Host "result:" $result
 }

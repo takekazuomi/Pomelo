@@ -97,7 +97,7 @@ function Set-PoAzVMCustomScript {
         FileUris = $FileUris
         CommandToExecute = $CommandToExecute
     }
-    $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/customscript.stg -TemplateName customscript -config $config -Verbose:$verbose 
+    $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/customscript.stg -TemplateName customscript -config $config -Verbose:$verbose 
     Write-Verbose $result -Verbose:$verbose
 
     deployResourceGroupDeployment $ResourceGroupName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose
@@ -118,7 +118,7 @@ function Get-PoAzKeylist {
     $config = @{
         StorageAccount=$StorageAccountName
     }
-    $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/keylist.stg -TemplateName keylist -config $config -Verbose:$verbose 
+    $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/keylist.stg -TemplateName keylist -config $config -Verbose:$verbose 
     Write-Verbose $result -Verbose:$verbose
 
     deployResourceGroupDeployment $ResourceGroupName $result -ValidationOnly:$ValidationOnly -Verbose:$verbose

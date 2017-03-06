@@ -35,7 +35,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -75,8 +75,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy *.dll $(ProjectDir)\..\samples\azure-ssh\$(OutDir) /y
-xcopy *.pdb $(ProjectDir)\..\samples\azure-ssh\$(OutDir) /y
+    <PostBuildEvent>xcopy *.dll $(ProjectDir)\..\build\PomeloSt\ /y
+xcopy *.pdb $(ProjectDir)\..\build\PomeloSt\ /y
+xcopy *.psm1 $(ProjectDir)\..\build\PomeloSt\ /y
+xcopy *.psd1 $(ProjectDir)\..\build\PomeloSt\ /y
+
 
 </PostBuildEvent>
   </PropertyGroup>

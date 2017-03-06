@@ -56,7 +56,7 @@ function Get-PoAzSshConfig {
 
     $config = getSshConfig $ResourceGroupName $Name $IdentityFile $PasswordAuthentication
 
-    $result = $config | Convert-StTemplate -GroupPath $PSScriptRoot/st/sshconfig.stg -TemplateName host
+    $result = $config | Invoke-PoTemplate -GroupPath $PSScriptRoot/st/sshconfig.stg -TemplateName host
     $result
 }
 
@@ -123,7 +123,7 @@ function Get-PoAzSshJumpboxConfig {
         $hosts.Add($config)
         $hosts.AddRange($localForwardHost)
 
-        $result = Convert-StTemplate -GroupPath $PSScriptRoot/st/sshconfig.stg -TemplateName host -config  $hosts
+        $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/sshconfig.stg -TemplateName host -config  $hosts
         $result | Out-File -Encoding ascii -FilePath (Join-Path $Path "ssh_${Name}.config") -Force
     }
 }
@@ -143,7 +143,7 @@ function Get-PoAzSshRemoteDesktopFile{
 
     $outfile = ?: {$Path -match "\.rdp$"} {$Path} {Join-Path $Path "$Name.rdp"}
     Write-Host $outfile
-    Convert-StTemplate -GroupPath $PSScriptRoot/st/rdpfile.stg -TemplateName rdpfile -host $HostName -port $Port | Out-File -Encoding ascii -FilePath $outfile -Force
+    Invoke-PoTemplate -GroupPath $PSScriptRoot/st/rdpfile.stg -TemplateName rdpfile -host $HostName -port $Port | Out-File -Encoding ascii -FilePath $outfile -Force
 }
 
 # install your public key in a remote machine's authorized_keys

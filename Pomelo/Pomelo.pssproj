@@ -27,38 +27,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\StringTemplateCmdlet\StringTemplateCmdlet.csproj">
-      <Name>StringTemplateCmdlet</Name>
-      <Project>{f8a73675-c6d9-4709-b873-f28605ba1e74}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Pomelo.psd1" />
     <Compile Include="Pomelo.psm1" />
     <Compile Include="Scripts\Cms.ps1" />
     <Compile Include="Scripts\CustomScript.ps1" />
     <Compile Include="Scripts\Nsg.ps1" />
-    <Compile Include="Scripts\NsgUtils.ps1" />
     <Compile Include="Scripts\SshConfig.ps1" />
+    <Compile Include="Scripts\st\customscript.stg" />
+    <Compile Include="Scripts\st\keylist.stg" />
+    <Compile Include="Scripts\st\nsg.stg" />
+    <Compile Include="Scripts\st\rdpfile.stg" />
+    <Compile Include="Scripts\st\sshconfig.stg" />
+    <Compile Include="Scripts\st\vmaccess.stg" />
     <Compile Include="Scripts\Utils.ps1" />
     <Compile Include="Scripts\VMAccess.ps1" />
-    <Compile Include="st\keylist.stg" />
     <Compile Include="Tests\Nsg.Tests.ps1" />
     <Compile Include="Tests\Pomelo.Tests.ps1" />
-    <Compile Include="st\rdpfile.stg" />
-    <Compile Include="st\sshconfig.stg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\" />
     <Folder Include="Scripts\st\" />
-    <Folder Include="st\" />
     <Folder Include="Tests\" />
     <Folder Include="tmp\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="st\customscript.stg" />
-    <Content Include="st\vmaccess.stg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />

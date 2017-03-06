@@ -12,16 +12,14 @@ using Antlr4.StringTemplate.Visualizer.Extensions;
 
 namespace PomeloSt
 {
-    [Cmdlet(VerbsData.Convert, "PoTemplate")]
-    public class ConvertStTemplate : BaseStTemplate
+    [Cmdlet(VerbsLifecycle.Invoke, "PoTemplate")]
+    public class InvokeStTemplate : BaseStTemplate
     {
         [Parameter(HelpMessage = "show visualizer.")]
         public SwitchParameter Visualize { get; set; } = false;
 
         [Parameter(HelpMessage = "json mode.")]
         public SwitchParameter Json { get; set; } = false;
-
-
 
         protected override void BeginProcessing()
         {
