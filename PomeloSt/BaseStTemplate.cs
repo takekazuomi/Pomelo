@@ -67,7 +67,8 @@ namespace PomeloSt
                     {
                         var m = string.Format("top level attributes: {0}", string.Join(", ", attr.Keys));
 
-                        Host.UI.WriteVerboseLine(m);
+                        if(IsVerbose)
+                            Host.UI.WriteVerboseLine(m);
                         foreach (var key in attr.Keys)
                         {
                             var attribute = new ParameterAttribute
@@ -91,7 +92,8 @@ namespace PomeloSt
             catch (Exception e)
             {
                 var m = string.Format("In GetDynamicParameters: {0}", e);
-                Host.UI.WriteVerboseLine(m);
+                if (IsVerbose)
+                    Host.UI.WriteVerboseLine(m);
                 throw;
             }
             return null;
