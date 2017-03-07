@@ -1,4 +1,4 @@
-Get-ChildItem "$PSScriptRoot/Scripts/*.ps1" |
+Get-ChildItem "$PSScriptRoot/*.ps1" |
     ? { $_.Name -notlike "*.Tests.*" } |
     % { . $_.PSPath }
 

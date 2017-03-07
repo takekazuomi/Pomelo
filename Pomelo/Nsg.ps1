@@ -40,6 +40,7 @@ function Import-NsgRuleCsv
 {
     [OutputType([Rule[]])]
     Param(
+        [Parameter(ValueFromPipeline=$true, Mandatory=$true)]
         [PSObject[]]$InputObject
     )
     [Rule[]]($InputObject | ConvertFrom-Csv | Select $filter|?{$_.Enable})

@@ -27,28 +27,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Cms.ps1" />
+    <Compile Include="CustomScript.ps1" />
+    <Compile Include="Nsg.ps1" />
+    <Compile Include="Nsg.Tests.ps1" />
     <Compile Include="Pomelo.psd1" />
     <Compile Include="Pomelo.psm1" />
-    <Compile Include="Scripts\Cms.ps1" />
-    <Compile Include="Scripts\CustomScript.ps1" />
-    <Compile Include="Scripts\Nsg.ps1" />
-    <Compile Include="Scripts\SshConfig.ps1" />
-    <Compile Include="Scripts\st\customscript.stg" />
-    <Compile Include="Scripts\st\keylist.stg" />
-    <Compile Include="Scripts\st\nsg.stg" />
-    <Compile Include="Scripts\st\rdpfile.stg" />
-    <Compile Include="Scripts\st\sshconfig.stg" />
-    <Compile Include="Scripts\st\vmaccess.stg" />
-    <Compile Include="Scripts\Utils.ps1" />
-    <Compile Include="Scripts\VMAccess.ps1" />
-    <Compile Include="Tests\Nsg.Tests.ps1" />
-    <Compile Include="Tests\Pomelo.Tests.ps1" />
+    <Compile Include="Pomelo.Tests.ps1" />
+    <Compile Include="SshConfig.ps1" />
+    <Compile Include="Utils.ps1" />
+    <Compile Include="VMAccess.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scripts\" />
-    <Folder Include="Scripts\st\" />
-    <Folder Include="Tests\" />
-    <Folder Include="tmp\" />
+    <Folder Include="st\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />

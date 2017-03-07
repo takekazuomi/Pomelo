@@ -1,4 +1,4 @@
-function Decrypt-PoCmsContent {
+function Unprotect-PoCmsContent {
     param(
         [string]$CertThumbprint,
         [Parameter(ParameterSetName="base64")]
@@ -24,7 +24,7 @@ function Decrypt-PoCmsContent {
     [Text.Encoding]::UTF8.GetString($cms.ContentInfo.Content)
 }
 
-function Encrypt-PoCmsContent {
+function Protect-PoCmsContent {
     param(
         [string]$CertThumbprint,
         [Parameter(ParameterSetName="string")]
@@ -58,3 +58,9 @@ function Encrypt-PoCmsContent {
         "base64" {[Convert]::ToBase64String($envelop.Encode());break}
     }
 }
+
+
+# Protect-CmsMessage
+# https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.security/protect-cmsmessage
+# Unprotect-CmsMessage
+# https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.security/unprotect-cmsmessage

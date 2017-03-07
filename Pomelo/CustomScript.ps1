@@ -38,12 +38,9 @@ function Set-PoAzFileToBlob
         [string]$ContainerName,
         [string]$SourceFile
     )
-#    Write-Host "Set-PoAzFileToBlob"
 
     $startTime=(Get-Date).AddMinutes(-15)
     $expiryTime=(Get-Date).AddDays(10)
-#    $startTime=[datetime]"2017-01-01"
-#    $expiryTime=[datetime]"2017-03-01"
     $permission="r"
     
     $source = Get-Item $SourceFile
