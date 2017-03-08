@@ -33,12 +33,12 @@
     <Compile Include="Nsg.Tests.ps1" />
     <Compile Include="Pomelo.psd1" />
     <Compile Include="Pomelo.psm1" />
+    <Compile Include="st\nsg.stg" />
     <Compile Include="VMAccess.Tests.ps1" />
     <Compile Include="CustomScript.Tests.ps1" />
     <Compile Include="SshConfig.ps1" />
     <Compile Include="st\customscript.stg" />
     <Compile Include="st\keylist.stg" />
-    <Compile Include="st\nsg.stg" />
     <Compile Include="st\rdpfile.stg" />
     <Compile Include="st\sshconfig.stg" />
     <Compile Include="st\vmaccess.stg" />

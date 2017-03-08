@@ -1,32 +1,44 @@
-﻿group customscript;
+group nsg;
 
-customscript(config) ::= <<
+template(config) ::= <<
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {},
   "variables": {},
-  "resources": [{
-    "name": "<config.vmName>/scriptextension",
-    "type": "Microsoft.Compute/virtualMachines/extensions",
-    "location": "[resourceGroup().location]",
-    "apiVersion": "2015-06-15",
-    "properties": {
-      "publisher": "Microsoft.Azure.Extensions",
-      "type": "CustomScript",
-      "typeHandlerVersion": "2.0",
-      "autoUpgradeMinorVersion": true,
-      "settings": {
-        "fileUris": [
-          <config.fileUris;format="json-encode",separator=",">
-        ],
-        "timestamp": <config.timestamp>
-      },
-      "protectedSettings": {
-        "commandToExecute": <config.commandToExecute;format="json-encode">
-      }
-    }
-  }]
+  "resources":[
+    <config:nsg();separator=",\n">
+  ],
+  "outputs": {}
 }
 >>
 
+nsg(config) ::= <<
+{
+  "name": "<config.name>",
+  "type": "Microsoft.Network/networkSecurityGroups",
+  "apiVersion": "2016-12-01",
+  "location": "[resourceGroup().location]",
+  "properties": {
+    "securityRules": [
+      <config.securityRules:securityRules();separator=",\n">
+    ]
+  }
+}
+>>
+
+securityRules(rule) ::= <<
+{
+  "name": "<rule.name>",
+  "properties": {
+    "protocol": "<rule.protocol>",
+    "sourcePortRange": "<rule.sourcePortRange>",
+    "destinationPortRange": "<rule.destinationPortRange>",
+    "sourceAddressPrefix": "<rule.sourceAddressPrefix>",
+    "destinationAddressPrefix": "<rule.destinationAddressPrefix>",
+    "access": "<rule.access>",
+    "priority": "<rule.priority>",
+    "direction": "<rule.direction>"
+  }
+}
+>>

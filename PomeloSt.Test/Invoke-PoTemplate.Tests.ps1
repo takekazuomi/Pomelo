@@ -58,6 +58,19 @@ Describe -Tag "simple-pipe" "simple pipe test" {
     }
 }
 
+Describe -Tag "simple-pipe2" "simple pipe test" {
+    Context "Context template helloworld.st" {
+        $result = [PSCustomObject]@{name=@(0..6)} | Invoke-PoTemplate2 -GroupPath $PSScriptRoot/st -TemplateName helloworld -Verbose
+        It "Hello foo, bar" {
+            # It is an unexpected result, but SHOGANAI
+            $result.GetType() | Out-Host
+            $result | ft | Out-Host
+            (-join $result) | Should Be "Hello "
+        }
+    }
+}
+
+
 Describe -Tag "multi-attr-param" "multiple top level attributes with parameter test" {
     Context "Context template message.st" {
         $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st -TemplateName message -name "Posh" -message "Hello"

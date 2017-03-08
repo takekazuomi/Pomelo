@@ -1,4 +1,5 @@
 ﻿#Require -Version 5.0
+using namespace System.Collections.Generic
 
 function toCamelCase{
     Param([string]$name)
@@ -7,6 +8,16 @@ function toCamelCase{
         $c[0]=[Char]::ToUpper($c[0])
     }
     -join $c
+}
+
+class Nsg {
+    [string]$Name
+    [List[Rule]]$SecurityRules
+
+    Nsg([string]$Name,[List[Rule]]$SecurityRules){
+        $this.Name= $Name
+        $this.SecurityRules=$SecurityRules
+    }
 }
 
 class Rule {
@@ -36,7 +47,7 @@ $filter = [Rule]::new() | Get-Member -MemberType Properties | %{
     }
 }
 
-function Import-NsgRuleCsv
+function Import-PoAzNsgRuleCsv
 {
     [OutputType([Rule[]])]
     Param(
@@ -44,6 +55,21 @@ function Import-NsgRuleCsv
         [PSObject[]]$InputObject
     )
     [Rule[]]($InputObject | ConvertFrom-Csv | Select $filter|?{$_.Enable})
+}
+
+function New-PoAzNgsTemplate
+{
+    [OutputType([string])]
+    Param(
+        [string] $Name,
+        [Rule[]] $Rules
+    )
+    $verbose = ?? $PSBoundParameters.Verbose $false
+
+    $nsg = [Nsg]::new($Name, $Rules)
+
+    $result = Invoke-PoTemplate -GroupPath $PSScriptRoot/st/nsg.stg -TemplateName template -config $nsg -Verbose:$verbose 
+    $result
 }
 
 # [Rule[]]($csv | ConvertFrom-Csv | Select @{Name="enable";Expression={$_.enable -ne 0}},name)
