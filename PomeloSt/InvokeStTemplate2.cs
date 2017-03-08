@@ -23,9 +23,6 @@ namespace PomeloSt
 
         protected override void BeginProcessing()
         {
-            if (Template == null)
-                Template = new Template(TemplateString, DelimiterStartChar, DelimiterStopChar);
-
             Template.Group.RegisterModelAdaptor(typeof(PSObject), new PSObjectModelAdaptor { WriteVerbose = WriteVerbose });
             if (Json)
                 Template.Group.RegisterRenderer(typeof(string), new DefaultJsonRenderer());

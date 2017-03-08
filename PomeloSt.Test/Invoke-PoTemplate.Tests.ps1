@@ -60,12 +60,15 @@ Describe -Tag "simple-pipe" "simple pipe test" {
 
 Describe -Tag "simple-pipe2" "simple pipe test" {
     Context "Context template helloworld.st" {
-        $result = [PSCustomObject]@{name=@(0..6)} | Invoke-PoTemplate2 -GroupPath $PSScriptRoot/st -TemplateName helloworld -Verbose
-        It "Hello foo, bar" {
-            # It is an unexpected result, but SHOGANAI
-            $result.GetType() | Out-Host
-            $result | ft | Out-Host
-            (-join $result) | Should Be "Hello "
+        $result = @(0..6) | Invoke-PoTemplate2 -GroupPath $PSScriptRoot/st -TemplateName helloworld -Verbose
+        It -Skip "Hello foo, bar" {
+            (-join $result) | Should Be "Hello 0, 1, 2, 3, 4, 5, 6"
+        }
+    }
+    Context "Context template string" {
+        $result = @(0..6) | Invoke-PoTemplate2 -TemplateString "<name;separator=`",`">" -Properties "name" -Verbose
+        It "0,1,2,3,4,5,6" {
+            (-join $result) | Should Be "0,1,2,3,4,5,6"
         }
     }
 }

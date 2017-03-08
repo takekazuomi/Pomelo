@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
+using System.Web.UI.WebControls;
 using Antlr4.StringTemplate;
 
 // http://www.powershellmagazine.com/2014/03/18/writing-a-powershell-module-in-c-part-1-the-basics/
@@ -18,10 +20,17 @@ namespace PomeloSt
         [Parameter(ParameterSetName = "anonymous", HelpMessage = "template string", Mandatory = true, Position = 0)]
         public string TemplateString { get; set; }
 
+        [Parameter(ParameterSetName = "anonymous", HelpMessage = "template properties name", Mandatory = true, Position = 1)]
+        public string[] Properties { get; set; }
+
         [Parameter(ParameterSetName = "group", HelpMessage = "template group directory or group file", Mandatory = true, Position = 0)]
         public string GroupPath { get; set; }
 
-        [Parameter(HelpMessage = "template name", Mandatory = true, Position = 0)]
+        [Parameter(ParameterSetName = "groupstring", HelpMessage = "template group string", Mandatory = true, Position = 0)]
+        public string GroupString { get; set; }
+
+        [Parameter(ParameterSetName = "group", HelpMessage = "template name", Mandatory = true, Position = 0)]
+        [Parameter(ParameterSetName = "groupstring")]
         public string TemplateName { get; set; }
 
         [Parameter(HelpMessage = "delimiter start char, default: <")]
@@ -36,58 +45,79 @@ namespace PomeloSt
 
         protected bool IsVerbose;
 
-        public virtual  object GetDynamicParameters()
+        private void PrepareTemplate()
         {
-            IsVerbose = MyInvocation.BoundParameters.ContainsKey("Verbose") &&
-                        ((SwitchParameter) MyInvocation.BoundParameters["Verbose"]).ToBool();
-
-            try
+            TemplateGroup templateGroup;
+            switch (ParameterSetName)
             {
-                if (GroupPath != null && TemplateName != null)
-                {
+                case "group":
                     var path = System.IO.Path.GetFullPath(GroupPath);
-                    TemplateGroup templateGroup;
                     if (path.EndsWith(TemplateGroup.GroupFileExtension, StringComparison.InvariantCultureIgnoreCase))
-                    templateGroup = new TemplateGroupFile(path, Encoding.UTF8, DelimiterStartChar, DelimiterStopChar)
-                    {
-                        Verbose = IsVerbose,
-                        Logger = Host.UI.WriteVerboseLine
-                    };
+                        templateGroup = new TemplateGroupFile(path, Encoding.UTF8, DelimiterStartChar, DelimiterStopChar)
+                        {
+                            Verbose = IsVerbose,
+                            Logger = Host.UI.WriteVerboseLine
+                        };
                     else
                         templateGroup = new TemplateGroupDirectory(path, Encoding.UTF8, DelimiterStartChar, DelimiterStopChar)
                         {
                             Verbose = IsVerbose,
                             Logger = Host.UI.WriteVerboseLine
                         };
-
                     Template = templateGroup.GetInstanceOf(TemplateName);
-                    var paramDictionary = new RuntimeDefinedParameterDictionary();
-                    var attr = Template?.GetAttributes();
-                    if (attr != null)
-                    {
-                        var m = string.Format("top level attributes: {0}", string.Join(", ", attr.Keys));
+                    break;
+                case "groupstring":
+                    templateGroup = new TemplateGroupString(TemplateName, GroupString, DelimiterStartChar, DelimiterStopChar);
+                    Template = templateGroup.GetInstanceOf(TemplateName);
+                    break;
+                case "anonymous":
+                    Template = new Template(TemplateString, DelimiterStartChar, DelimiterStopChar);
+                    break;
+            }
+        }
 
-                        if(IsVerbose)
-                            Host.UI.WriteVerboseLine(m);
-                        foreach (var key in attr.Keys)
-                        {
-                            var attribute = new ParameterAttribute
-                            {
-                                ValueFromPipeline = true,
-                                ValueFromPipelineByPropertyName = true
-                            };
-                            var attributeCollection = new Collection<System.Attribute> {attribute};
-                            var param = new RuntimeDefinedParameter(key, typeof(object), attributeCollection);
-                            paramDictionary.Add(key, param);
-                        }
-                        RuntimeDefinedParameterDictionary = paramDictionary;
-                    }
-                    else
+        ICollection<string> GetAttributes()
+        {
+            var attr = Template?.GetAttributes();
+            if (attr != null)
+                return attr.Keys;
+            return Properties;
+        }
+
+        public virtual  object GetDynamicParameters()
+        {
+            IsVerbose = MyInvocation.BoundParameters.ContainsKey("Verbose") &&
+                        ((SwitchParameter) MyInvocation.BoundParameters["Verbose"]).ToBool();
+            try
+            {
+                PrepareTemplate();
+
+                var paramDictionary = new RuntimeDefinedParameterDictionary();
+                var keys = GetAttributes();
+                if (keys != null)
+                {
+                    if (IsVerbose)
                     {
-                        Host.UI.WriteWarningLine("no top level attribute");
+                        var m = string.Format("top level attributes: {0}", string.Join(", ", keys));
+                        Host.UI.WriteVerboseLine(m);
                     }
-                    return paramDictionary;
+                    foreach (var key in keys)
+                    {
+                        var attribute = new ParameterAttribute
+                        {
+                            ValueFromPipeline = true,
+                            ValueFromPipelineByPropertyName = true
+                        };
+                        var attributeCollection = new Collection<System.Attribute> {attribute};
+                        var param = new RuntimeDefinedParameter(key, typeof(object), attributeCollection);
+                        paramDictionary.Add(key, param);
+                    }
+                    RuntimeDefinedParameterDictionary = paramDictionary;
                 }
+                else
+                    Host.UI.WriteWarningLine("no formal argument");
+
+                return paramDictionary;
             }
             catch (Exception e)
             {
@@ -96,22 +126,6 @@ namespace PomeloSt
                     Host.UI.WriteVerboseLine(m);
                 throw;
             }
-            return null;
-        }
-
-        private void Dump(string  key, object data)
-        {
-            if(!IsVerbose) 
-                return;
-
-            var e = data as IEnumerable;
-            var sb= new StringBuilder();
-            sb.AppendFormat("Attribute:{0}, Type: ", key);
-            sb.AppendLine(
-                e != null ?
-                string.Join(", ", e.Cast<object>().Select(o => o.GetType().Name)) : 
-                data.GetType().Name);
-            WriteVerbose(sb.ToString().TrimEnd(',', ' '));
         }
     }
 }

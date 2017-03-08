@@ -35,6 +35,7 @@
     <Compile Include="st\message.st" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="st\helloworld2.st" />
     <Content Include="st\mygroup.stg" />
     <Content Include="st\sshconfig.stg" />
     <Content Include="st\groupfiletest.stg" />
