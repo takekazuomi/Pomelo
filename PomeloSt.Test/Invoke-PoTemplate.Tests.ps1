@@ -60,13 +60,13 @@ Describe -Tag "simple-pipe" "simple pipe test" {
 
 Describe -Tag "simple-pipe2" "simple pipe test" {
     Context "Context template helloworld.st" {
-        $result = @(0..6) | Invoke-PoTemplate2 -GroupPath $PSScriptRoot/st -TemplateName helloworld -Verbose
+        $result = @(0..6) | Invoke-PoTemplate -GroupPath $PSScriptRoot/st -TemplateName helloworld -Verbose
         It -Skip "Hello foo, bar" {
             (-join $result) | Should Be "Hello 0, 1, 2, 3, 4, 5, 6"
         }
     }
     Context "Context template string" {
-        $result = @(0..6) | Invoke-PoTemplate2 -TemplateString "<name;separator=`",`">" -Properties "name" -Verbose
+        $result = @(0..6) | Invoke-PoTemplate -TemplateString "<name;separator=`",`">" -Properties "name" -Verbose
         It "0,1,2,3,4,5,6" {
             (-join $result) | Should Be "0,1,2,3,4,5,6"
         }

@@ -23,9 +23,6 @@ namespace PomeloSt
 
         protected override void BeginProcessing()
         {
-            if (Template == null)
-                Template = new Template(TemplateString, DelimiterStartChar, DelimiterStopChar);
-
             Template.Group.RegisterModelAdaptor(typeof(PSObject), new PSObjectModelAdaptor { WriteVerbose = WriteVerbose });
             if (Json)
                 Template.Group.RegisterRenderer(typeof(string), new DefaultJsonRenderer());
@@ -36,7 +33,6 @@ namespace PomeloSt
 
         protected override void ProcessRecord()
         {
-            var template = Template.CreateShadow();
             if (RuntimeDefinedParameterDictionary != null)
             {
                 // The value specified by the dynamic parameter is used.
@@ -47,22 +43,26 @@ namespace PomeloSt
                     if (param.Value != null)
                     {
                         Dump("ProcessRecord: ", key, param.Value);
-                        template.Add(key, param.Value);
+                        Template.Add(key, param.Value);
                     }
                 }
-            }
-            if (Visualize)
-            {
-                template.Visualize();
-            }
-            else
-            {
-                WriteObject(template.Render());
             }
         }
 
         protected override void EndProcessing()
         {
+            if (Visualize)
+                Template.Visualize();
+            else
+            {
+                WriteObject(Template.Render());
+                foreach (var key in RuntimeDefinedParameterDictionary.Keys)
+                {
+                    var param = RuntimeDefinedParameterDictionary[key];
+                    if (param.Value != null)
+                        Template.Remove(key);
+                }
+            }
         }
         private void Dump(string message, string  key, object data)
         {

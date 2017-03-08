@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseStTemplate.cs" />
-    <Compile Include="InvokeStTemplate2.cs" />
     <Compile Include="InvokeStTemplate.cs" />
     <Compile Include="DefaultJsonRenderer.cs" />
     <Compile Include="JsonRenderer.cs" />
